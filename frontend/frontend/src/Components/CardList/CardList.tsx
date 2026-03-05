@@ -26,9 +26,7 @@ const CardList: React.FC<Props> = ({searchResults, onPortfolioCreate}: Props): J
                 <Card id={result.symbol} key={uuidv4()} searchResult={result} onPortfolioCreate={onPortfolioCreate}/>
             ))
         ) : (
-            <p className="mb-3 mt-3 text-xl font-semibold text-center md:text-xl">
-                No results found
-            </p>
+            <p>No results found</p>
         )
         }
     </div>

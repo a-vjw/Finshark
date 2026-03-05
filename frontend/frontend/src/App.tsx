@@ -8,15 +8,12 @@ import { searchCompanies } from './api';
 import AddPortfolio from './Components/Portfolio/AddPortfolio/AddPortfolio';
 import ListPortfolio from './Components/Portfolio/ListPortfolio/ListPortfolio';
 import CardPortfolio from './Components/Portfolio/CardPortfolio/CardPortfolio';
-import Navbar from './Components/Navbar/Navbar';
-import Hero from './Components/Hero/Hero';
 
 function App() {
   const [search, setSearch] = useState<string>('')
-  const [portfolioValues, setPortfolioValues] = useState<string[]>([])
   const [searchResult, setsearchResult] = useState<CompanySearch[]>([])
-  const [serveError, setServeError] = useState<string | null>(null)
-  
+  const [serveError, setServeError] = useState<string>('')
+  const [portfolioValues, setPortfolioValues] = useState<string[]>([])
 
   const handleSearchChange = (e:  ChangeEvent<HTMLInputElement>) => {
       setSearch(e.target.value)
@@ -25,15 +22,9 @@ function App() {
 
   const onPortfolioCreate = (e: any) => {
     e.preventDefault();
-    const exists = portfolioValues.find((value) => value === e.target[0].value);
-    if(exists) {
-      alert('This stock is already in your portfolio!');
-      return;
-    }
-    console.log("E: " + e.target[0].value)
     const updatedPortfolio = [...portfolioValues, e.target[0].value];
     setPortfolioValues(updatedPortfolio);
-    // console.log(portfolioValues)
+    console.log(portfolioValues)
   }
   
   const onSearchSubmit = async (e: SyntheticEvent) => {
@@ -45,21 +36,13 @@ function App() {
       } else if(Array.isArray(result.data)) {
         setsearchResult(result.data);
       }
-      // console.log(searchResult)
-  }
-
-  const onPortfolioDelete = (e: any) => {
-    e.preventDefault();
-    const updatedPortfolio = portfolioValues.filter((value) => value !== e.target[0].value);
-    setPortfolioValues(updatedPortfolio);
+      console.log(searchResult)
   }
 
   return (
     <div className="App">
-      <Navbar />
-      {/* <Hero /> */}
       <Search onSearchSubmit={onSearchSubmit} search={search} handleSearchChange={handleSearchChange}/>
-      <ListPortfolio portfolioValues={portfolioValues} onPortfolioDelete={onPortfolioDelete} />
+      <ListPortfolio portfolioValues={portfolioValues} />
       {serveError && <p className='error'>{serveError}</p>}
       <CardList searchResults={searchResult} onPortfolioCreate={onPortfolioCreate}/>
     </div>

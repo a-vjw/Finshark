@@ -5,7 +5,6 @@ export interface CompanySearch {
   name: string;
   stockExchange: string;
   symbol: string;
-  exchangeFullName: string;
 }
 
 export interface CompanyProfile {
